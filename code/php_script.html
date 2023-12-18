@@ -1,0 +1,23 @@
+<html>
+<head>
+    <title>Reads data from one file and write into another file in PHP</title>
+</head>
+<body>
+<?php
+    // filename to open
+    $fname = "file1.txt";
+    // to open file for reading
+    $fptr = fopen($fname, "r");
+    // to read content of the file
+    $content=fread($fptr,filesize($fname));
+    // to open for writing
+    $fptw = fopen("file2.txt", "w");
+    // to write content into another file
+    fwrite($fptw,$content);
+    echo "<strong>The content copied in file2 is:</strong> <br>". $content;
+    //close files 
+    fclose($fptr);
+    fclose($fptw);
+?>
+</body>
+</html>

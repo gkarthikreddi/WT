@@ -1,0 +1,50 @@
+<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>Login Application</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<script type="text/javascript">
+function ValidateEmail(emailId)
+{
+	var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+	if(emailId.value.match(mailformat))
+	{
+		document.getElementById('password').focus();
+		return true;
+	}
+	else
+	{
+		alert("You have entered an invalid email address!");
+		document.getElementById('emailId').focus();
+		return false;
+	}
+}
+</script>
+
+</head>
+<body>
+
+	<form action="loginServlet" method="post" onclick="ValidateEmail(document.getElementById('emailId'))">
+		<div class="container">
+	<label for="username"><b>Email</b></label>
+	<input type="text" placeholder="Please enter your email" name="emailId" id = "emailId" required>
+
+	<label for="password"><b>Password</b></label>
+	<input type="password" placeholder="Please enter Password" name="password" id="password" required>
+		
+	<button type="submit">Login</button>
+	<label>
+	<input type="checkbox" checked="checked" name="rememberme"> Remember me
+	</label>
+</div>
+
+<div class="container" style="background-color:#f1f1f1">
+	<button type="button" class="cancelbutton">Cancel</button>
+	<span class="psw">Forgot <a href="<%=request.getContextPath()%>/forgotpassword.jsp">password?</a></span>
+</div>
+	</form>
+</body>
+</html>

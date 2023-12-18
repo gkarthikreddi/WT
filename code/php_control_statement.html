@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Even-Odd Checker</title>
+</head>
+<body>
+    <h1>Even-Odd Checker</h1>
+
+    <?php
+    // Check if the form is submitted
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        // Get the number from the form
+        $number = $_POST["number"];
+
+        // Validate the input
+        if (is_numeric($number)) {
+            // Check if the number is even or odd
+            if ($number % 2 == 0) {
+                echo "<p>$number is an even number.</p>";
+            } else {
+                echo "<p>$number is an odd number.</p>";
+            }
+        } else {
+            echo "<p>Please enter a valid number.</p>";
+        }
+    }
+    ?>
+
+    <form method="post">
+        <label for="number">Enter a number:</label>
+        <input type="text" name="number" required>
+        <input type="submit" value="Check">
+    </form>
+</body>
+</html>
+

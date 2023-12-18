@@ -1,0 +1,443 @@
+<!doctype html>
+<html lang="en">
+<head>
+	<title>WT</title>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+
+	<link href="https://fonts.googleapis.com/css?family=Inter:400,600" rel="stylesheet" defer />
+	<link rel="stylesheet" type="text/css" href="static/styles.css" />
+    <script src="static/script.js"></script>
+</head>
+<body>
+    <div class="container">
+        <center>
+            <h1 style="font-size: 40px;">WEB Technology</h1>
+        <table>
+            <tr>
+                <td><li><a href="#welcome_msg">JSP welcome msg</a>, <a href="#servlet_config">JSP servlet config</a></li></td>
+                <td><li><a href="#session_tracking">Session Tracking</a></li></td>
+            </tr>
+            <tr>
+                <td><li><a href="#jsp_exception">JSP Exception</a></li></td>
+                <td><li><a href="#jsp_webpage">JSP Webpage</a></li></td>
+            </tr>
+            <tr>
+                <td><li><a href="#php_cookies">PHP Cookies</a></li></td>
+                <td><li><a href="#php_script">PHP Script</a></li></td>
+            </tr>
+            <tr>
+                <td><li><a href="#php_control_statement">PHP Control Structure</a></li></td>
+            </tr>
+        </table>
+        </center>
+        <section class="box" id="welcome_msg" style="margin-top: 20px;">
+            <h2>JSP Welcom Msg</h2>
+            <button class="copy" data-clipboard-target="#bit">Copy Code</button>
+            <pre>
+            <code class="block" id="bit">
+<p>
+import java.io.IOException;
+import javax.servlet.ServletException;
+import javax.servlet.annotation.WebServlet;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+
+@WebServlet("/MyServlet")
+public class MyServlet extends HttpServlet {
+	private static final long serialVersionUID = 1L;
+    public MyServlet() {
+        super();
+          }
+	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		// TODO Auto-generated method stub
+		response.setContentType("text/html");
+		PrintWriter out=response.getWriter();
+		out.print("&lthtml&gt&lthead&gtMy First Servlet&lt/head&gt&ltbody&gt");
+		out.print("&ltcenter&gt&lth2&gt");
+		out.print("Welcome to HTTP Servlets&lt/h2&gt&lt/center&gt");
+		out.print("&ltp&gtdoGet() Method is executing....&lt/p&gt");
+		out.print("&lt/body&gt&lt/html&gt");
+	}
+}
+</p>
+            </code>
+            </pre>
+        </section>
+        <section class="box" id="servlet_config" style="margin-top: 20px;">
+            <h2>JSP Servlet Config</h2>
+            <button class="copy" data-clipboard-target="#cs">Copy Code</button>
+            <pre>
+            <code class="block" id="cs">
+<p>
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+
+public class DemoServlet extends HttpServlet{
+public void doGet(HttpServletRequest req,HttpServletResponse res)
+throws ServletException,IOException
+{
+res.setContentType("text/html");
+PrintWriter pw=res.getWriter();
+
+//creating ServletContext object
+ServletContext context=getServletContext();
+
+//Getting the value of the initialization parameter and printing it
+String driverName=context.getInitParameter("dname");
+pw.println("driver name is="+driverName);
+</p>
+            </code>
+            </pre>
+        </section>
+        <section class="box" id="session_tracking" style="margin-top: 20px;">
+            <h2>Session Tracking</h2>
+            <button class="copy" data-clipboard-target="#crc">Copy Code</button>
+            <pre>
+            <code class="block" id="crc">
+<p>
+#index.html
+
+&ltform action="servlet1" method="post"&gt
+Name:&ltinput type="text" name="userName"/&gt&ltbr/&gt
+&ltinput type="submit" value="go"/&gt
+&lt/form&gt
+
+#FirstServlet.java
+
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+
+public class FirstServlet extends HttpServlet {
+
+  public void doPost(HttpServletRequest request, HttpServletResponse response){
+    try{
+
+    response.setContentType("text/html");
+    PrintWriter out = response.getWriter();
+
+    String n=request.getParameter("userName");
+    out.print("Welcome "+n);
+
+    Cookie ck=new Cookie("uname",n);//creating cookie object
+    response.addCookie(ck);//adding cookie in the response
+
+    //creating submit button
+    out.print("&ltform action='servlet2'&gt");
+    out.print("&ltinput type='submit' value='go'&gt");
+    out.print("&lt/form&gt");
+
+    out.close();
+
+        }catch(Exception e){System.out.println(e);}
+  }
+}
+
+#SecondServlet.java
+
+import java.io.*;
+import javax.servlet.*;
+import javax.servlet.http.*;
+
+public class SecondServlet extends HttpServlet {
+
+public void doPost(HttpServletRequest request, HttpServletResponse response){
+    try{
+
+    response.setContentType("text/html");
+    PrintWriter out = response.getWriter();
+
+    Cookie ck[]=request.getCookies();
+    out.print("Hello "+ck[0].getValue());
+
+    out.close();
+
+         }catch(Exception e){System.out.println(e);}
+    }
+
+
+}
+
+#web.xml
+&ltweb-app&gt
+
+&ltservlet&gt
+&ltservlet-name&gts1&lt/servlet-name&gt
+&ltservlet-class&gtFirstServlet&lt/servlet-class&gt
+&lt/servlet&gt
+
+&ltservlet-mapping&gt
+&ltservlet-name&gts1&lt/servlet-name&gt
+&lturl-pattern&gt/servlet1&lt/url-pattern&gt
+&lt/servlet-mapping&gt
+
+&ltservlet&gt
+&ltservlet-name&gts2&lt/servlet-name&gt
+&ltservlet-class&gtSecondServlet&lt/servlet-class&gt
+&lt/servlet&gt
+
+&ltservlet-mapping&gt
+&ltservlet-name&gts2&lt/servlet-name&gt
+&lturl-pattern&gt/servlet2&lt/url-pattern&gt
+&lt/servlet-mapping&gt
+
+&lt/web-app&gt
+</p>
+            </code>
+            </pre>
+        </section>
+        <section class="box" id="jsp_exception" style="margin-top: 20px;">
+            <h2>JSP Exception</h2>
+            <button class="copy" data-clipboard-target="#swp">Copy Code</button>
+            <pre>
+            <code class="block" id="swp">
+<p>
+#index.jsp
+
+&ltform action="process.jsp"&gt
+No1:&ltinput type="text" name="n1" /&gt&ltbr/&gt&ltbr/&gt
+No1:&ltinput type="text" name="n2" /&gt&ltbr/&gt&ltbr/&gt
+&ltinput type="submit" value="divide"/&gt
+&lt/form&gt
+
+#process.jsp
+&lt%@ page errorPage="error.jsp" %&gt
+&lt%
+
+String num1=request.getParameter("n1");
+String num2=request.getParameter("n2");
+
+int a=Integer.parseInt(num1);
+int b=Integer.parseInt(num2);
+int c=a/b;
+out.print("division of numbers is: "+c);
+
+%&gt
+
+#error.jsp
+
+&lt%@ page isErrorPage="true" %&gt
+
+&lth3&gtSorry an exception occured!&lt/h3&gt
+
+Exception is: &lt%= exception %&gt
+</p>
+            </code>
+            </pre>
+        </section>
+        <section class="box" id="jsp_webpage" style="margin-top: 20px;">
+            <h2>JSP Webpage</h2>
+            <button class="copy" data-clipboard-target="#dv">Copy Code</button>
+            <pre>
+            <code class="block" id="dv">
+<p>
+&lt%@ page language="java" contentType="text/html; charset=ISO-8859-1"
+	pageEncoding="ISO-8859-1"%&gt
+&lthtml&gt
+&lthead&gt
+&ltmeta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1"&gt
+&lttitle&gtLogin Application&lt/title&gt
+&ltmeta name="viewport" content="width=device-width, initial-scale=1"&gt
+
+&ltscript type="text/javascript"&gt
+function ValidateEmail(emailId)
+{
+	var mailformat = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+	if(emailId.value.match(mailformat))
+	{
+		document.getElementById('password').focus();
+		return true;
+	}
+	else
+	{
+		alert("You have entered an invalid email address!");
+		document.getElementById('emailId').focus();
+		return false;
+	}
+}
+&lt/script&gt
+
+&lt/head&gt
+&ltbody&gt
+
+	&ltform action="loginServlet" method="post" onclick="ValidateEmail(document.getElementById('emailId'))"&gt
+		&ltdiv class="container"&gt
+	&ltlabel for="username"&gt&ltb&gtEmail&lt/b&gt&lt/label&gt
+	&ltinput type="text" placeholder="Please enter your email" name="emailId" id = "emailId" required&gt
+
+	&ltlabel for="password"&gt&ltb&gtPassword&lt/b&gt&lt/label&gt
+	&ltinput type="password" placeholder="Please enter Password" name="password" id="password" required&gt
+
+	&ltbutton type="submit"&gtLogin&lt/button&gt
+	&ltlabel&gt
+	&ltinput type="checkbox" checked="checked" name="rememberme"&gt Remember me
+	&lt/label&gt
+&lt/div&gt
+
+&ltdiv class="container" style="background-color:#f1f1f1"&gt
+	&ltbutton type="button" class="cancelbutton"&gtCancel&lt/button&gt
+	&ltspan class="psw"&gtForgot &lta href="&lt%=request.getContextPath()%&gt/forgotpassword.jsp"&gtpassword?&lt/a&gt&lt/span&gt
+&lt/div&gt
+	&lt/form&gt
+&lt/body&gt
+&lt/html&gt
+</p>
+            </code>
+            </pre>
+        </section>
+        <section class="box" id="php_cookies" style="margin-top: 20px;">
+            <h2>PHP Cookies</h2>
+            <button class="copy" data-clipboard-target="#ded">Copy Code</button>
+            <pre>
+            <code class="block" id="ded">
+<p>
+&lt?php
+// Function to set a cookie with a given name, value, and expiration time
+function setCookieValue($name, $value, $expire) {
+    setcookie($name, $value, time() + $expire, "/");
+}
+
+// Function to get the value of a cookie by its name
+function getCookieValue($name) {
+    return isset($_COOKIE[$name]) ? $_COOKIE[$name] : null;
+}
+
+// Function to clear a cookie by setting its expiration time to the past
+function clearCookie($name) {
+    setcookie($name, "", time() - 3600, "/");
+}
+
+// Check if a form is submitted to set a new cookie
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Set a cookie named "user" with the submitted value and a 1-hour expiration time
+    $username = $_POST["username"];
+    setCookieValue("user", $username, 3600);
+}
+
+// Check if a form is submitted to clear the cookie
+if (isset($_POST["clear_cookie"])) {
+    // Clear the cookie named "user"
+    clearCookie("user");
+}
+
+// Get the current value of the "user" cookie, if it exists
+$userCookieValue = getCookieValue("user");
+?&gt
+
+&lt!DOCTYPE html&gt
+&lthtml lang="en"&gt
+&lthead&gt
+    &ltmeta charset="UTF-8"&gt
+    &ltmeta name="viewport" content="width=device-width, initial-scale=1.0"&gt
+    &lttitle&gtCookie Handling in PHP&lt/title&gt
+&lt/head&gt
+&ltbody&gt
+    &lth1&gtCookie Handling in PHP&lt/h1&gt
+
+    &lt?php if ($userCookieValue): ?&gt
+        &ltp&gtWelcome back, &lt?php echo htmlspecialchars($userCookieValue); ?&gt!&lt/p&gt
+        &ltform method="post"&gt
+            &ltinput type="submit" name="clear_cookie" value="Clear Cookie"&gt
+        &lt/form&gt
+    &lt?php else: ?&gt
+        &ltp&gtNo cookie set. Enter your name to set a cookie:&lt/p&gt
+        &ltform method="post"&gt
+            &ltlabel for="username"&gtUsername:&lt/label&gt
+            &ltinput type="text" name="username" required&gt
+            &ltinput type="submit" value="Set Cookie"&gt
+        &lt/form&gt
+    &lt?php endif; ?&gt
+&lt/body&gt
+&lt/html&gt
+</p>
+            </code>
+            </pre>
+        </section>
+        <section class="box" id="php_script" style="margin-top: 20px;">
+            <h2>PHP Script</h2>
+            <button class="copy" data-clipboard-target="#lba">Copy Code</button>
+            <pre>
+            <code class="block" id="lba">
+<p>
+&lthtml&gt
+&lthead&gt
+    &lttitle&gtReads data from one file and write into another file in PHP&lt/title&gt
+&lt/head&gt
+&ltbody&gt
+&lt?php
+    // filename to open
+    $fname = "file1.txt";
+    // to open file for reading
+    $fptr = fopen($fname, "r");
+    // to read content of the file
+    $content=fread($fptr,filesize($fname));
+    // to open for writing
+    $fptw = fopen("file2.txt", "w");
+    // to write content into another file
+    fwrite($fptw,$content);
+    echo "&ltstrong&gtThe content copied in file2 is:&lt/strong&gt &ltbr&gt". $content;
+    //close files
+    fclose($fptr);
+    fclose($fptw);
+?&gt
+&lt/body&gt
+&lt/html&gt
+</p>
+            </code>
+            </pre>
+        </section>
+        <section class="box" id="php_control_statement" style="margin-top: 20px;">
+            <h2>PHP Control Structure</h2>
+            <button class="copy" data-clipboard-target="#sub">Copy Code</button>
+            <pre>
+            <code class="block" id="sub">
+<p>
+&lt!DOCTYPE html&gt
+&lthtml lang="en"&gt
+&lthead&gt
+    &ltmeta charset="UTF-8"&gt
+    &ltmeta name="viewport" content="width=device-width, initial-scale=1.0"&gt
+    &lttitle&gtEven-Odd Checker&lt/title&gt
+&lt/head&gt
+&ltbody&gt
+    &lth1&gtEven-Odd Checker&lt/h1&gt
+
+    &lt?php
+    // Check if the form is submitted
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        // Get the number from the form
+        $number = $_POST["number"];
+
+        // Validate the input
+        if (is_numeric($number)) {
+            // Check if the number is even or odd
+            if ($number % 2 == 0) {
+                echo "&ltp&gt$number is an even number.&lt/p&gt";
+            } else {
+                echo "&ltp&gt$number is an odd number.&lt/p&gt";
+            }
+        } else {
+            echo "&ltp&gtPlease enter a valid number.&lt/p&gt";
+        }
+    }
+    ?&gt
+
+    &ltform method="post"&gt
+        &ltlabel for="number"&gtEnter a number:&lt/label&gt
+        &ltinput type="text" name="number" required&gt
+        &ltinput type="submit" value="Check"&gt
+    &lt/form&gt
+&lt/body&gt
+&lt/html&gt
+</p>
+            </code>
+            </pre>
+        </section>
+    </div>
+</body>
