@@ -1,0 +1,48 @@
+#A) HTTP Session 
+import javax.servlet.http.HttpServlet.*;
+import java.io.IOException;
+
+public class HttpSessionExample extends HttpServlet {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        HttpSession session = request.getSession();
+        session.setAttribute("username", "JohnDoe");
+        String username = (String) session.getAttribute("username");
+        response.getWriter().println("HttpSession Example - Welcome, " + username);
+    }
+}
+
+#2) Cookies
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServlet;
+import java.io.IOException;
+
+public class CookiesExample extends HttpServlet {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        Cookie usernameCookie = new Cookie("username", "JaneDoe");
+        usernameCookie.setMaxAge(3600); // 1 hour
+        response.addCookie(usernameCookie);
+        response.getWriter().println("Cookies Example - Welcome, JaneDoe");
+    }
+}
+
+#3) Hidden Form Controls
+import javax.servlet.http.HttpServlet;
+import java.io.IOException;
+
+public class HiddenFormExample extends HttpServlet {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("text/html");
+        response.getWriter().println("<html><body>");
+        response.getWriter().println("<form action='/YourServletMapping/HiddenFormExample' method='post'>");
+        response.getWriter().println("<input type='hidden' name='username' value='MarkSmith'>");
+        response.getWriter().println("<input type='submit' value='Submit'>");
+        response.getWriter().println("</form>");
+        response.getWriter().println("</body></html>");
+    }
+
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String username = request.getParameter("username");
+        response.getWriter().println("Hidden Form Example - Welcome, " + username);
+    }
+}
+
