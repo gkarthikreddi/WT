@@ -131,13 +131,10 @@ schema.xsd:
 &lt?xml version="1.0" encoding="UTF-8"?&gt
 &ltxs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"&gt
 
-  &lt!-- Definition for the root element --&gt
   &ltxs:element name="example"&gt
     &ltxs:complexType&gt
       &ltxs:sequence&gt
-        &lt!-- Definition for the "name" element --&gt
         &ltxs:element name="name" type="xs:string"/&gt
-        &lt!-- Definition for the "age" element --&gt
         &ltxs:element name="age" type="xs:positiveInteger"/&gt
       &lt/xs:sequence&gt
     &lt/xs:complexType&gt
@@ -153,7 +150,7 @@ example.xml:
   &ltage&gt25&lt/age&gt
 &lt/example&gt
 
-Run: xmllint --schema example-schema.xsd example.xml
+Run: xmllint --schema schema.xsd example.xml
 </p>
             </code>
             </pre>
