@@ -125,35 +125,35 @@
 &lt/student&gt
 
 # B)
-?xml version="1.0"?&gt
-&ltxs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
-targetNamespace="http://www.vbithyd.ac.in"
-xmlns="http://www.vbithd.ac.in"
-elementFormDefault="qualified"&gt
 
-&ltxs:element name="employee"&gt
-&ltxs:complexType&gt
-&ltxs:sequence&gt
-&ltxs:element name="firstname" type="xs:string"/&gt
-&ltxs:element name="lastname" type="xs:string"/&gt
-&ltxs:element name="email" type="xs:string"/&gt
-&lt/xs:sequence&gt
-&lt/xs:complexType&gt
-&lt/xs:element&gt
+schema.xsd:
+
+&lt?xml version="1.0" encoding="UTF-8"?&gt
+&ltxs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"&gt
+
+  &lt!-- Definition for the root element --&gt
+  &ltxs:element name="example"&gt
+    &ltxs:complexType&gt
+      &ltxs:sequence&gt
+        &lt!-- Definition for the "name" element --&gt
+        &ltxs:element name="name" type="xs:string"/&gt
+        &lt!-- Definition for the "age" element --&gt
+        &ltxs:element name="age" type="xs:positiveInteger"/&gt
+      &lt/xs:sequence&gt
+    &lt/xs:complexType&gt
+  &lt/xs:element&gt
 
 &lt/xs:schema&gt
-Let's see the xml file using XML schema or XSD file.
-employee.xml
-&lt?xml version="1.0"?&gt
-&ltemployee
-xmlns="http://vbithyd.ac.in"
-xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-xsi:schemaLocation="http://www.vbithyd.ac.inemployee.xsd"&gt
 
-&ltfirstname&gtraviraj&lt/firstname&gt
-&ltlastname&gtNaidu&lt/lastname&gt
-&ltemail&gtvimal@vbithyd.ac.in&lt/email&gt
-&lt/employee&gt
+example.xml:
+
+&lt?xml version="1.0" encoding="UTF-8"?&gt
+&ltexample&gt
+  &ltname&gtJohn Doe&lt/name&gt
+  &ltage&gt25&lt/age&gt
+&lt/example&gt
+
+Run: xmllint --schema example-schema.xsd example.xml
 </p>
             </code>
             </pre>
